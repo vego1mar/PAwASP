@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsRESTClient
 {
-    partial class RESTClient
+    partial class RestClient
     {
         /// <summary>
         /// Required designer variable.
@@ -78,7 +78,7 @@
             this.cbRESTType.Name = "cbRESTType";
             this.cbRESTType.Size = new System.Drawing.Size(98, 21);
             this.cbRESTType.TabIndex = 0;
-            this.cbRESTType.SelectedIndexChanged += new System.EventHandler(this.CbRESTType_SelectedIndexChanged);
+            this.cbRESTType.SelectedIndexChanged += new System.EventHandler(this.CbRestType_SelectedIndexChanged);
             // 
             // tbURL
             // 
@@ -176,17 +176,17 @@
             this.tpgLastRequestHeader.Text = "Last request header";
             this.tpgLastRequestHeader.UseVisualStyleBackColor = true;
             // 
-            // RESTClient
+            // RestClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 525);
             this.Controls.Add(this.tctrlMainWindow);
             this.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Name = "RESTClient";
+            this.Name = "RestClient";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Forms REST Client";
-            this.Load += new System.EventHandler(this.RESTClient_Load);
+            this.Load += new System.EventHandler(this.RestClient_Load);
             this.tlpMainWindow.ResumeLayout(false);
             this.tlpMainWindow.PerformLayout();
             this.tctrlMainWindow.ResumeLayout(false);

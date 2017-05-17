@@ -2,7 +2,7 @@
 
 namespace WindowsFormsRESTClient
 {
-    internal static class RESTType
+    internal static class RestType
     {
 
         public const int GET = 0;

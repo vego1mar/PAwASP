@@ -1,2 +1,5 @@
 WindowsFormsRESTClient/WindowsFormsRESTClient/bin/
 WindowsFormsRESTClient/WindowsFormsRESTClient/obj/
+sonarqube_cmd.txt
+.sonarqube/
+WindowsFormsRESTClient/WindowsFormsRESTClient/bw-output/

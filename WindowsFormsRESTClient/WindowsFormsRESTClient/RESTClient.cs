@@ -6,43 +6,34 @@ using System.Windows.Forms;
 
 namespace WindowsFormsRESTClient
 {
-    public partial class RESTClient : Form
+    public partial class RestClient : Form
     {
 
-        public RESTClient()
+        public RestClient()
         {
             InitializeComponent();
         }
 
-        private void RESTClient_Load( object sender, EventArgs e )
+        private void RestClient_Load( object sender, EventArgs e )
         {
-            RESTType.AddItemsToComboBox( cbRESTType );
+            RestType.AddItemsToComboBox( cbRESTType );
             ContentType.AddItemsToComboBox( cbContentType );
-            cbRESTType.SelectedIndex = RESTType.GET;
+            cbRESTType.SelectedIndex = RestType.GET;
             cbContentType.SelectedIndex = ContentType.APPLICATION_JSON;
             tbURL.Text = "https://jsonplaceholder.typicode.com/posts";
         }
 
-        private void CbRESTType_SelectedIndexChanged( object sender, EventArgs e )
+        private void CbRestType_SelectedIndexChanged( object sender, EventArgs e )
         {
             switch ( cbRESTType.SelectedIndex ) {
-            case RESTType.GET:
+            case RestType.GET:
+            case RestType.DELETE:
                 cbContentType.Enabled = false;
                 tbReceivedMessage.ReadOnly = true;
                 break;
-            case RESTType.POST:
-                cbContentType.Enabled = true;
-                tbReceivedMessage.ReadOnly = false;
-                break;
-            case RESTType.PUT:
-                cbContentType.Enabled = true;
-                tbReceivedMessage.ReadOnly = false;
-                break;
-            case RESTType.DELETE:
-                cbContentType.Enabled = false;
-                tbReceivedMessage.ReadOnly = true;
-                break;
-            case RESTType.PATCH:
+            case RestType.POST:
+            case RestType.PUT:
+            case RestType.PATCH:
                 cbContentType.Enabled = true;
                 tbReceivedMessage.ReadOnly = false;
                 break;
@@ -52,44 +43,44 @@ namespace WindowsFormsRESTClient
         private void BtnPerform_Click( object sender, EventArgs e )
         {
             switch ( cbRESTType.SelectedIndex ) {
-            case RESTType.GET:
-                UseHttpRESTSenderSkeleton( RESTType.GET );
+            case RestType.GET:
+                UseHttpRestSenderSkeleton( RestType.GET );
                 break;
-            case RESTType.POST:
-                UseHttpRESTSenderSkeleton( RESTType.POST );
+            case RestType.POST:
+                UseHttpRestSenderSkeleton( RestType.POST );
                 break;
-            case RESTType.PUT:
-                UseHttpRESTSenderSkeleton( RESTType.PUT );
+            case RestType.PUT:
+                UseHttpRestSenderSkeleton( RestType.PUT );
                 break;
-            case RESTType.DELETE:
-                UseHttpRESTSenderSkeleton( RESTType.DELETE );
+            case RestType.DELETE:
+                UseHttpRestSenderSkeleton( RestType.DELETE );
                 break;
-            case RESTType.PATCH:
-                UseHttpRESTSenderSkeleton( RESTType.PATCH );
+            case RestType.PATCH:
+                UseHttpRestSenderSkeleton( RestType.PATCH );
                 break;
             }
         }
 
-        private void UseHttpRESTSenderSkeleton( int restType )
+        private void UseHttpRestSenderSkeleton( int restType )
         {
             try {
                 UpdateTextBoxAndRefresh( tbResponseCodeOutput, "Performing..." );
 
                 switch ( restType ) {
-                case RESTType.GET:
-                    SendHttpGET( tbURL );
+                case RestType.GET:
+                    SendHttpGet( tbURL );
                     break;
-                case RESTType.POST:
-                    SendHttpPOST( tbURL, tbReceivedMessage );
+                case RestType.POST:
+                    SendHttpPost( tbURL, tbReceivedMessage );
                     break;
-                case RESTType.PUT:
-                    SendHttpPUT( tbURL, tbReceivedMessage );
+                case RestType.PUT:
+                    SendHttpPut( tbURL, tbReceivedMessage );
                     break;
-                case RESTType.DELETE:
-                    SendHttpDELETE( tbURL );
+                case RestType.DELETE:
+                    SendHttpDelete( tbURL );
                     break;
-                case RESTType.PATCH:
-                    SendHttpPATCH( tbURL, tbReceivedMessage );
+                case RestType.PATCH:
+                    SendHttpPatch( tbURL, tbReceivedMessage );
                     break;
                 }
             }
@@ -172,20 +163,20 @@ namespace WindowsFormsRESTClient
             MessageBox.Show( x.Message, x.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
         }
 
-        private void SendHttpGET( TextBox url )
+        private void SendHttpGet( TextBox url )
         {
             WebRequest request = WebRequest.Create( url.Text );
             GetHttpResponseAndUpdateUI( request );
         }
 
-        private void SendHttpDELETE( TextBox url )
+        private void SendHttpDelete( TextBox url )
         {
             WebRequest request = WebRequest.Create( url.Text );
             request.Method = "DELETE";
             GetHttpResponseAndUpdateUI( request );
         }
 
-        private void SendHttpPOST( TextBox url, TextBox message )
+        private void SendHttpPost( TextBox url, TextBox message )
         {
             WebRequest request = WebRequest.Create( url.Text );
             SetSelectedContentType( request );
@@ -195,7 +186,7 @@ namespace WindowsFormsRESTClient
             GetHttpResponseAndUpdateUI( request );
         }
 
-        private void SendHttpPUT( TextBox url, TextBox message )
+        private void SendHttpPut( TextBox url, TextBox message )
         {
             WebRequest request = WebRequest.Create( url.Text );
             SetSelectedContentType( request );
@@ -205,7 +196,7 @@ namespace WindowsFormsRESTClient
             GetHttpResponseAndUpdateUI( request );
         }
 
-        private void SendHttpPATCH( TextBox url, TextBox message )
+        private void SendHttpPatch( TextBox url, TextBox message )
         {
             WebRequest request = WebRequest.Create( url.Text );
             SetSelectedContentType( request );
@@ -282,7 +273,6 @@ namespace WindowsFormsRESTClient
                 request.ContentType = "image/svg+xml";
                 break;
             case ContentType.APPLICATION_JSON:
-            default:
                 request.ContentType = "application/json; charset=utf-8";
                 break;
             }

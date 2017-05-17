@@ -13,7 +13,7 @@ namespace WindowsFormsRESTClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new RESTClient() );
+            Application.Run( new RestClient() );
         }
 
     }
