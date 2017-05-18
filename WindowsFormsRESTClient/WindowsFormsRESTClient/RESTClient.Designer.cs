@@ -38,7 +38,7 @@
             this.tbReceivedMessage = new System.Windows.Forms.TextBox();
             this.tctrlMainWindow = new System.Windows.Forms.TabControl();
             this.tpgClient = new System.Windows.Forms.TabPage();
-            this.tpgLastRequestHeader = new System.Windows.Forms.TabPage();
+            this.tbHeaders = new System.Windows.Forms.TextBox();
             this.tlpMainWindow.SuspendLayout();
             this.tctrlMainWindow.SuspendLayout();
             this.tpgClient.SuspendLayout();
@@ -59,23 +59,25 @@
             this.tlpMainWindow.Controls.Add(this.tbResponseCode, 0, 1);
             this.tlpMainWindow.Controls.Add(this.tbResponseCodeOutput, 1, 1);
             this.tlpMainWindow.Controls.Add(this.tbReceivedMessage, 0, 2);
+            this.tlpMainWindow.Controls.Add(this.tbHeaders, 0, 3);
             this.tlpMainWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMainWindow.Location = new System.Drawing.Point(3, 3);
             this.tlpMainWindow.Name = "tlpMainWindow";
-            this.tlpMainWindow.RowCount = 3;
+            this.tlpMainWindow.RowCount = 4;
             this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43F));
+            this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42F));
             this.tlpMainWindow.Size = new System.Drawing.Size(1044, 493);
             this.tlpMainWindow.TabIndex = 0;
             // 
-            // cbRESTType
+            // cbRestType
             // 
             this.cbRestType.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbRestType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRestType.FormattingEnabled = true;
             this.cbRestType.Location = new System.Drawing.Point(3, 3);
-            this.cbRestType.Name = "cbRESTType";
+            this.cbRestType.Name = "cbRestType";
             this.cbRestType.Size = new System.Drawing.Size(98, 21);
             this.cbRestType.TabIndex = 0;
             this.cbRestType.SelectedIndexChanged += new System.EventHandler(this.CbRestType_SelectedIndexChanged);
@@ -141,13 +143,12 @@
             this.tbReceivedMessage.Name = "tbReceivedMessage";
             this.tbReceivedMessage.ReadOnly = true;
             this.tbReceivedMessage.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbReceivedMessage.Size = new System.Drawing.Size(1038, 414);
+            this.tbReceivedMessage.Size = new System.Drawing.Size(1038, 205);
             this.tbReceivedMessage.TabIndex = 6;
             // 
             // tctrlMainWindow
             // 
             this.tctrlMainWindow.Controls.Add(this.tpgClient);
-            this.tctrlMainWindow.Controls.Add(this.tpgLastRequestHeader);
             this.tctrlMainWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tctrlMainWindow.Location = new System.Drawing.Point(0, 0);
             this.tctrlMainWindow.Name = "tctrlMainWindow";
@@ -166,15 +167,17 @@
             this.tpgClient.Text = "Client";
             this.tpgClient.UseVisualStyleBackColor = true;
             // 
-            // tpgLastRequestHeader
+            // tbHeaders
             // 
-            this.tpgLastRequestHeader.Location = new System.Drawing.Point(4, 22);
-            this.tpgLastRequestHeader.Name = "tpgLastRequestHeader";
-            this.tpgLastRequestHeader.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgLastRequestHeader.Size = new System.Drawing.Size(1050, 499);
-            this.tpgLastRequestHeader.TabIndex = 1;
-            this.tpgLastRequestHeader.Text = "Last request header";
-            this.tpgLastRequestHeader.UseVisualStyleBackColor = true;
+            this.tlpMainWindow.SetColumnSpan(this.tbHeaders, 4);
+            this.tbHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbHeaders.Location = new System.Drawing.Point(3, 287);
+            this.tbHeaders.Multiline = true;
+            this.tbHeaders.Name = "tbHeaders";
+            this.tbHeaders.ReadOnly = true;
+            this.tbHeaders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbHeaders.Size = new System.Drawing.Size(1038, 203);
+            this.tbHeaders.TabIndex = 7;
             // 
             // RestClient
             // 
@@ -204,11 +207,11 @@
         private System.Windows.Forms.ComboBox cbContentType;
         private System.Windows.Forms.TabControl tctrlMainWindow;
         private System.Windows.Forms.TabPage tpgClient;
-        private System.Windows.Forms.TabPage tpgLastRequestHeader;
         private System.Windows.Forms.Button btnPerform;
         private System.Windows.Forms.TextBox tbResponseCode;
         private System.Windows.Forms.TextBox tbResponseCodeOutput;
         private System.Windows.Forms.TextBox tbReceivedMessage;
+        private System.Windows.Forms.TextBox tbHeaders;
     }
 }
 

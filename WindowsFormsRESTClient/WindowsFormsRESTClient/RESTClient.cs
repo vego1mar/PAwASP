@@ -19,8 +19,11 @@ namespace WindowsFormsRESTClient
             RestType.AddItemsToComboBox( cbRestType );
             ContentType.AddItemsToComboBox( cbContentType );
             cbRestType.SelectedIndex = RestType.GET;
-            cbContentType.SelectedIndex = ContentType.APPLICATION_JSON;
+            cbContentType.SelectedIndex = ContentType.APPLICATION_XML;
             tbURL.Text = "https://jsonplaceholder.typicode.com/posts";
+            tbResponseCodeOutput.Text = "0";
+            tbReceivedMessage.Text = "Body";
+            tbHeaders.Text = "Headers";
         }
 
         private void CbRestType_SelectedIndexChanged( object sender, EventArgs e )
@@ -91,6 +94,7 @@ namespace WindowsFormsRESTClient
                     string responseCodeInfo = (int) response.StatusCode + " " + response.StatusCode.ToString();
                     UpdateTextBoxAndRefresh( tbResponseCodeOutput, responseCodeInfo );
                     UpdateTextBoxAndRefresh( tbReceivedMessage, "" );
+                    UpdateTextBoxAndRefresh( tbHeaders, "" );
                 }
                 else {
                     UpdateUIToInformAboutException();
@@ -155,6 +159,7 @@ namespace WindowsFormsRESTClient
         {
             UpdateTextBoxAndRefresh( tbResponseCodeOutput, "Failed" );
             UpdateTextBoxAndRefresh( tbReceivedMessage, "" );
+            UpdateTextBoxAndRefresh( tbHeaders, "" );
         }
 
         private void UpdateUIAndShowMessageBoxWithCatchedException( Exception x )
@@ -165,13 +170,13 @@ namespace WindowsFormsRESTClient
 
         private void SendHttpGet( TextBox url )
         {
-            WebRequest request = WebRequest.Create( url.Text );
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
             GetHttpResponseAndUpdateUI( request );
         }
 
         private void SendHttpDelete( TextBox url )
         {
-            WebRequest request = WebRequest.Create( url.Text );
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
             request.Method = "DELETE";
             GetHttpResponseAndUpdateUI( request );
         }
@@ -189,20 +194,22 @@ namespace WindowsFormsRESTClient
 
         private void SendHttpPut( TextBox url, TextBox message )
         {
-            WebRequest request = WebRequest.Create( url.Text );
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
             SetSelectedContentType( request );
             request.ContentLength = message.Text.Length;
             request.Method = "PUT";
+            SetAcceptHeaderAsSelectedContentType( request );
             SendHttpRequest( request, message );
             GetHttpResponseAndUpdateUI( request );
         }
 
         private void SendHttpPatch( TextBox url, TextBox message )
         {
-            WebRequest request = WebRequest.Create( url.Text );
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
             SetSelectedContentType( request );
             request.ContentLength = message.Text.Length;
             request.Method = "PATCH";
+            SetAcceptHeaderAsSelectedContentType( request );
             SendHttpRequest( request, message );
             GetHttpResponseAndUpdateUI( request );
         }
@@ -210,71 +217,71 @@ namespace WindowsFormsRESTClient
         private void SetSelectedContentType( WebRequest request )
         {
             switch ( cbContentType.SelectedIndex ) {
+            case ContentType.APPLICATION_JSON:
+                request.ContentType = ContentType.APPLICATION_JSON_STRING;
+                break;
             case ContentType.APPLICATION_XML:
-                request.ContentType = "application/xml";
+                request.ContentType = ContentType.APPLICATION_XML_STRING;
                 break;
             case ContentType.APPLICATION_OCTET_STREAM:
-                request.ContentType = "application/octet-stream";
+                request.ContentType = ContentType.APPLICATION_OCTET_STREAM_STRING;
                 break;
             case ContentType.TEXT_CSS:
-                request.ContentType = "text/css";
+                request.ContentType = ContentType.TEXT_CSS_STRING;
                 break;
             case ContentType.TEXT_CSV:
-                request.ContentType = "text/csv";
+                request.ContentType = ContentType.TEXT_CSV_STRING;
                 break;
             case ContentType.APPLICATION_MS_WORD:
-                request.ContentType = "application/msword";
+                request.ContentType = ContentType.APPLICATION_MS_WORD_STRING;
                 break;
             case ContentType.TEXT_HTML:
-                request.ContentType = "text/html";
+                request.ContentType = ContentType.TEXT_HTML_STRING;
                 break;
             case ContentType.APPLICATION_XHTML_XML:
-                request.ContentType = "application/xhtml+xml";
+                request.ContentType = ContentType.APPLICATION_XHTML_XML_STRING;
                 break;
             case ContentType.IMAGE_X_ICON:
-                request.ContentType = "image/x-icon";
+                request.ContentType = ContentType.IMAGE_X_ICON_STRING;
                 break;
             case ContentType.APPLICATION_JAVA_ARCHIVE:
-                request.ContentType = "application/java-archive";
+                request.ContentType = ContentType.APPLICATION_JAVA_ARCHIVE_STRING;
                 break;
             case ContentType.IMAGE_JPEG:
-                request.ContentType = "image/jpeg";
+                request.ContentType = ContentType.IMAGE_JPEG_STRING;
                 break;
             case ContentType.APPLICATION_JAVA_SCRIPT:
-                request.ContentType = "application/javascript";
+                request.ContentType = ContentType.APPLICATION_JAVA_SCRIPT_STRING;
                 break;
             case ContentType.APPLICATION_PDF:
-                request.ContentType = "application/pdf";
+                request.ContentType = ContentType.APPLICATION_PDF_STRING;
                 break;
             case ContentType.FONT_TTF:
-                request.ContentType = "font/ttf";
+                request.ContentType = ContentType.FONT_TTF_STRING;
                 break;
             case ContentType.VIDEO_WEBM:
-                request.ContentType = "video/webm";
+                request.ContentType = ContentType.VIDEO_WEBM_STRING;
                 break;
             case ContentType.AUDIO_WEBM:
-                request.ContentType = "audio/webm";
+                request.ContentType = ContentType.AUDIO_WEBM_STRING;
                 break;
             case ContentType.IMAGE_WEBP:
-                request.ContentType = "image/webp";
+                request.ContentType = ContentType.IMAGE_WEBP_STRING;
                 break;
             case ContentType.APPLICATION_ZIP:
-                request.ContentType = "application/zip";
+                request.ContentType = ContentType.APPLICATION_ZIP_STRING;
                 break;
             case ContentType.APPLICATION_X_TAR:
-                request.ContentType = "application/x-tar";
+                request.ContentType = ContentType.APPLICATION_X_TAR_STRING;
                 break;
             case ContentType.APPLICATION_X_RAR_COMPRESSED:
-                request.ContentType = "application/x-rar-compressed";
+                request.ContentType = ContentType.APPLICATION_X_RAR_COMPRESSED_STRING;
                 break;
             case ContentType.APPLICATION_X_7Z_COMPRESSED:
-                request.ContentType = "application/x-7z-compressed";
+                request.ContentType = ContentType.APPLICATION_X_7Z_COMPRESSED_STRING;
                 break;
             case ContentType.IMAGE_SVG_XML:
-                request.ContentType = "image/svg+xml";
-                break;
-            case ContentType.APPLICATION_JSON:
-                request.ContentType = "application/json";
+                request.ContentType = ContentType.IMAGE_SVG_XML_STRING;
                 break;
             }
         }
@@ -287,6 +294,7 @@ namespace WindowsFormsRESTClient
                     string responseCodeInfo = (int) response.StatusCode + " " + response.StatusCode.ToString();
                     UpdateTextBoxAndRefresh( tbResponseCodeOutput, responseCodeInfo );
                     UpdateTextBoxAndRefresh( tbReceivedMessage, Convert.ToString( result ) );
+                    UpdateTextBoxAndRefresh( tbHeaders, response.Headers.ToString() );
                 }
             }
         }
@@ -303,10 +311,70 @@ namespace WindowsFormsRESTClient
         {
             switch ( cbContentType.SelectedIndex ) {
             case ContentType.APPLICATION_JSON:
-                httpRequest.Accept = "application/json";
+                httpRequest.Accept = ContentType.APPLICATION_JSON_STRING;
                 break;
             case ContentType.APPLICATION_XML:
-                httpRequest.Accept = "application/xml";
+                httpRequest.Accept = ContentType.APPLICATION_XML_STRING;
+                break;
+            case ContentType.APPLICATION_OCTET_STREAM:
+                httpRequest.Accept = ContentType.APPLICATION_OCTET_STREAM_STRING;
+                break;
+            case ContentType.TEXT_CSS:
+                httpRequest.Accept = ContentType.TEXT_CSS_STRING;
+                break;
+            case ContentType.TEXT_CSV:
+                httpRequest.Accept = ContentType.TEXT_CSV_STRING;
+                break;
+            case ContentType.APPLICATION_MS_WORD:
+                httpRequest.Accept = ContentType.APPLICATION_MS_WORD_STRING;
+                break;
+            case ContentType.TEXT_HTML:
+                httpRequest.Accept = ContentType.TEXT_HTML_STRING;
+                break;
+            case ContentType.APPLICATION_XHTML_XML:
+                httpRequest.Accept = ContentType.APPLICATION_XHTML_XML_STRING;
+                break;
+            case ContentType.IMAGE_X_ICON:
+                httpRequest.Accept = ContentType.IMAGE_X_ICON_STRING;
+                break;
+            case ContentType.APPLICATION_JAVA_ARCHIVE:
+                httpRequest.Accept = ContentType.APPLICATION_JAVA_ARCHIVE_STRING;
+                break;
+            case ContentType.IMAGE_JPEG:
+                httpRequest.Accept = ContentType.IMAGE_JPEG_STRING;
+                break;
+            case ContentType.APPLICATION_JAVA_SCRIPT:
+                httpRequest.Accept = ContentType.APPLICATION_JAVA_SCRIPT_STRING;
+                break;
+            case ContentType.APPLICATION_PDF:
+                httpRequest.Accept = ContentType.APPLICATION_PDF_STRING;
+                break;
+            case ContentType.FONT_TTF:
+                httpRequest.Accept = ContentType.FONT_TTF_STRING;
+                break;
+            case ContentType.VIDEO_WEBM:
+                httpRequest.Accept = ContentType.VIDEO_WEBM_STRING;
+                break;
+            case ContentType.AUDIO_WEBM:
+                httpRequest.Accept = ContentType.AUDIO_WEBM_STRING;
+                break;
+            case ContentType.IMAGE_WEBP:
+                httpRequest.Accept = ContentType.IMAGE_WEBP_STRING;
+                break;
+            case ContentType.APPLICATION_ZIP:
+                httpRequest.Accept = ContentType.APPLICATION_ZIP_STRING;
+                break;
+            case ContentType.APPLICATION_X_TAR:
+                httpRequest.Accept = ContentType.APPLICATION_X_TAR_STRING;
+                break;
+            case ContentType.APPLICATION_X_RAR_COMPRESSED:
+                httpRequest.Accept = ContentType.APPLICATION_X_RAR_COMPRESSED_STRING;
+                break;
+            case ContentType.APPLICATION_X_7Z_COMPRESSED:
+                httpRequest.Accept = ContentType.APPLICATION_X_7Z_COMPRESSED_STRING;
+                break;
+            case ContentType.IMAGE_SVG_XML:
+                httpRequest.Accept = ContentType.IMAGE_SVG_XML_STRING;
                 break;
             }
         }
