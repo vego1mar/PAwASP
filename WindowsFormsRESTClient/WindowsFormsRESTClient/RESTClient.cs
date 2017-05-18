@@ -16,16 +16,16 @@ namespace WindowsFormsRESTClient
 
         private void RestClient_Load( object sender, EventArgs e )
         {
-            RestType.AddItemsToComboBox( cbRESTType );
+            RestType.AddItemsToComboBox( cbRestType );
             ContentType.AddItemsToComboBox( cbContentType );
-            cbRESTType.SelectedIndex = RestType.GET;
+            cbRestType.SelectedIndex = RestType.GET;
             cbContentType.SelectedIndex = ContentType.APPLICATION_JSON;
             tbURL.Text = "https://jsonplaceholder.typicode.com/posts";
         }
 
         private void CbRestType_SelectedIndexChanged( object sender, EventArgs e )
         {
-            switch ( cbRESTType.SelectedIndex ) {
+            switch ( cbRestType.SelectedIndex ) {
             case RestType.GET:
             case RestType.DELETE:
                 cbContentType.Enabled = false;
@@ -42,7 +42,7 @@ namespace WindowsFormsRESTClient
 
         private void BtnPerform_Click( object sender, EventArgs e )
         {
-            switch ( cbRESTType.SelectedIndex ) {
+            switch ( cbRestType.SelectedIndex ) {
             case RestType.GET:
                 UseHttpRestSenderSkeleton( RestType.GET );
                 break;
@@ -178,10 +178,11 @@ namespace WindowsFormsRESTClient
 
         private void SendHttpPost( TextBox url, TextBox message )
         {
-            WebRequest request = WebRequest.Create( url.Text );
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create( url.Text );
             SetSelectedContentType( request );
             request.ContentLength = message.Text.Length;
             request.Method = "POST";
+            SetAcceptHeaderAsSelectedContentType( request );
             SendHttpRequest( request, message );
             GetHttpResponseAndUpdateUI( request );
         }
@@ -210,7 +211,7 @@ namespace WindowsFormsRESTClient
         {
             switch ( cbContentType.SelectedIndex ) {
             case ContentType.APPLICATION_XML:
-                request.ContentType = "application/xml; charset=utf-8";
+                request.ContentType = "application/xml";
                 break;
             case ContentType.APPLICATION_OCTET_STREAM:
                 request.ContentType = "application/octet-stream";
@@ -273,7 +274,7 @@ namespace WindowsFormsRESTClient
                 request.ContentType = "image/svg+xml";
                 break;
             case ContentType.APPLICATION_JSON:
-                request.ContentType = "application/json; charset=utf-8";
+                request.ContentType = "application/json";
                 break;
             }
         }
@@ -295,6 +296,18 @@ namespace WindowsFormsRESTClient
             using ( var requestStream = request.GetRequestStream() ) {
                 var dataToSend = Encoding.UTF8.GetBytes( textToSend.Text );
                 request.GetRequestStream().Write( dataToSend, 0, dataToSend.Length );
+            }
+        }
+
+        private void SetAcceptHeaderAsSelectedContentType( HttpWebRequest httpRequest )
+        {
+            switch ( cbContentType.SelectedIndex ) {
+            case ContentType.APPLICATION_JSON:
+                httpRequest.Accept = "application/json";
+                break;
+            case ContentType.APPLICATION_XML:
+                httpRequest.Accept = "application/xml";
+                break;
             }
         }
 

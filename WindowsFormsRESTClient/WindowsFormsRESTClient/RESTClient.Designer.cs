@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tlpMainWindow = new System.Windows.Forms.TableLayoutPanel();
-            this.cbRESTType = new System.Windows.Forms.ComboBox();
+            this.cbRestType = new System.Windows.Forms.ComboBox();
             this.tbURL = new System.Windows.Forms.TextBox();
             this.cbContentType = new System.Windows.Forms.ComboBox();
             this.btnPerform = new System.Windows.Forms.Button();
@@ -52,7 +52,7 @@
             this.tlpMainWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tlpMainWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tlpMainWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tlpMainWindow.Controls.Add(this.cbRESTType, 0, 0);
+            this.tlpMainWindow.Controls.Add(this.cbRestType, 0, 0);
             this.tlpMainWindow.Controls.Add(this.tbURL, 1, 0);
             this.tlpMainWindow.Controls.Add(this.cbContentType, 2, 0);
             this.tlpMainWindow.Controls.Add(this.btnPerform, 3, 0);
@@ -71,14 +71,14 @@
             // 
             // cbRESTType
             // 
-            this.cbRESTType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbRESTType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRESTType.FormattingEnabled = true;
-            this.cbRESTType.Location = new System.Drawing.Point(3, 3);
-            this.cbRESTType.Name = "cbRESTType";
-            this.cbRESTType.Size = new System.Drawing.Size(98, 21);
-            this.cbRESTType.TabIndex = 0;
-            this.cbRESTType.SelectedIndexChanged += new System.EventHandler(this.CbRestType_SelectedIndexChanged);
+            this.cbRestType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbRestType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRestType.FormattingEnabled = true;
+            this.cbRestType.Location = new System.Drawing.Point(3, 3);
+            this.cbRestType.Name = "cbRESTType";
+            this.cbRestType.Size = new System.Drawing.Size(98, 21);
+            this.cbRestType.TabIndex = 0;
+            this.cbRestType.SelectedIndexChanged += new System.EventHandler(this.CbRestType_SelectedIndexChanged);
             // 
             // tbURL
             // 
@@ -199,7 +199,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tlpMainWindow;
-        private System.Windows.Forms.ComboBox cbRESTType;
+        private System.Windows.Forms.ComboBox cbRestType;
         private System.Windows.Forms.TextBox tbURL;
         private System.Windows.Forms.ComboBox cbContentType;
         private System.Windows.Forms.TabControl tctrlMainWindow;
