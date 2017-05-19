@@ -20,9 +20,9 @@ namespace WindowsFormsRESTClient
             ContentType.AddItemsToComboBox( cbContentType );
             cbRestType.SelectedIndex = RestType.GET;
             cbContentType.SelectedIndex = ContentType.APPLICATION_XML;
-            tbURL.Text = "https://jsonplaceholder.typicode.com/posts";
+            tbURL.Text = "https://jsonplaceholder.typicode.com/users";
             tbResponseCodeOutput.Text = "0";
-            tbReceivedMessage.Text = "Body";
+            tbMessage.Text = "Body";
             tbHeaders.Text = "Headers";
         }
 
@@ -32,13 +32,13 @@ namespace WindowsFormsRESTClient
             case RestType.GET:
             case RestType.DELETE:
                 cbContentType.Enabled = false;
-                tbReceivedMessage.ReadOnly = true;
+                tbMessage.ReadOnly = true;
                 break;
             case RestType.POST:
             case RestType.PUT:
             case RestType.PATCH:
                 cbContentType.Enabled = true;
-                tbReceivedMessage.ReadOnly = false;
+                tbMessage.ReadOnly = false;
                 break;
             }
         }
@@ -74,16 +74,16 @@ namespace WindowsFormsRESTClient
                     SendHttpGet( tbURL );
                     break;
                 case RestType.POST:
-                    SendHttpPost( tbURL, tbReceivedMessage );
+                    SendHttpPost( tbURL, tbMessage );
                     break;
                 case RestType.PUT:
-                    SendHttpPut( tbURL, tbReceivedMessage );
+                    SendHttpPut( tbURL, tbMessage );
                     break;
                 case RestType.DELETE:
                     SendHttpDelete( tbURL );
                     break;
                 case RestType.PATCH:
-                    SendHttpPatch( tbURL, tbReceivedMessage );
+                    SendHttpPatch( tbURL, tbMessage );
                     break;
                 }
             }
@@ -93,7 +93,7 @@ namespace WindowsFormsRESTClient
                 if ( response != null ) {
                     string responseCodeInfo = (int) response.StatusCode + " " + response.StatusCode.ToString();
                     UpdateTextBoxAndRefresh( tbResponseCodeOutput, responseCodeInfo );
-                    UpdateTextBoxAndRefresh( tbReceivedMessage, "" );
+                    UpdateTextBoxAndRefresh( tbMessage, "" );
                     UpdateTextBoxAndRefresh( tbHeaders, "" );
                 }
                 else {
@@ -157,9 +157,10 @@ namespace WindowsFormsRESTClient
 
         private void UpdateUIToInformAboutException()
         {
-            UpdateTextBoxAndRefresh( tbResponseCodeOutput, "Failed" );
-            UpdateTextBoxAndRefresh( tbReceivedMessage, "" );
-            UpdateTextBoxAndRefresh( tbHeaders, "" );
+            const string FAILURE_MESSAGE = "Failed. Exception was thrown.";
+            UpdateTextBoxAndRefresh( tbResponseCodeOutput, FAILURE_MESSAGE );
+            UpdateTextBoxAndRefresh( tbMessage, FAILURE_MESSAGE );
+            UpdateTextBoxAndRefresh( tbHeaders, FAILURE_MESSAGE );
         }
 
         private void UpdateUIAndShowMessageBoxWithCatchedException( Exception x )
@@ -218,70 +219,70 @@ namespace WindowsFormsRESTClient
         {
             switch ( cbContentType.SelectedIndex ) {
             case ContentType.APPLICATION_JSON:
-                request.ContentType = ContentType.APPLICATION_JSON_STRING;
+                request.ContentType = ContentType.APPLICATION_JSON_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_XML:
-                request.ContentType = ContentType.APPLICATION_XML_STRING;
+                request.ContentType = ContentType.APPLICATION_XML_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_OCTET_STREAM:
-                request.ContentType = ContentType.APPLICATION_OCTET_STREAM_STRING;
+                request.ContentType = ContentType.APPLICATION_OCTET_STREAM_STRING + ";charset=utf-8";
                 break;
             case ContentType.TEXT_CSS:
-                request.ContentType = ContentType.TEXT_CSS_STRING;
+                request.ContentType = ContentType.TEXT_CSS_STRING + ";charset=utf-8";
                 break;
             case ContentType.TEXT_CSV:
-                request.ContentType = ContentType.TEXT_CSV_STRING;
+                request.ContentType = ContentType.TEXT_CSV_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_MS_WORD:
-                request.ContentType = ContentType.APPLICATION_MS_WORD_STRING;
+                request.ContentType = ContentType.APPLICATION_MS_WORD_STRING + ";charset=utf-8";
                 break;
             case ContentType.TEXT_HTML:
-                request.ContentType = ContentType.TEXT_HTML_STRING;
+                request.ContentType = ContentType.TEXT_HTML_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_XHTML_XML:
-                request.ContentType = ContentType.APPLICATION_XHTML_XML_STRING;
+                request.ContentType = ContentType.APPLICATION_XHTML_XML_STRING + ";charset=utf-8";
                 break;
             case ContentType.IMAGE_X_ICON:
-                request.ContentType = ContentType.IMAGE_X_ICON_STRING;
+                request.ContentType = ContentType.IMAGE_X_ICON_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_JAVA_ARCHIVE:
-                request.ContentType = ContentType.APPLICATION_JAVA_ARCHIVE_STRING;
+                request.ContentType = ContentType.APPLICATION_JAVA_ARCHIVE_STRING + ";charset=utf-8";
                 break;
             case ContentType.IMAGE_JPEG:
-                request.ContentType = ContentType.IMAGE_JPEG_STRING;
+                request.ContentType = ContentType.IMAGE_JPEG_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_JAVA_SCRIPT:
-                request.ContentType = ContentType.APPLICATION_JAVA_SCRIPT_STRING;
+                request.ContentType = ContentType.APPLICATION_JAVA_SCRIPT_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_PDF:
-                request.ContentType = ContentType.APPLICATION_PDF_STRING;
+                request.ContentType = ContentType.APPLICATION_PDF_STRING + ";charset=utf-8";
                 break;
             case ContentType.FONT_TTF:
-                request.ContentType = ContentType.FONT_TTF_STRING;
+                request.ContentType = ContentType.FONT_TTF_STRING + ";charset=utf-8";
                 break;
             case ContentType.VIDEO_WEBM:
-                request.ContentType = ContentType.VIDEO_WEBM_STRING;
+                request.ContentType = ContentType.VIDEO_WEBM_STRING + ";charset=utf-8";
                 break;
             case ContentType.AUDIO_WEBM:
-                request.ContentType = ContentType.AUDIO_WEBM_STRING;
+                request.ContentType = ContentType.AUDIO_WEBM_STRING + ";charset=utf-8";
                 break;
             case ContentType.IMAGE_WEBP:
-                request.ContentType = ContentType.IMAGE_WEBP_STRING;
+                request.ContentType = ContentType.IMAGE_WEBP_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_ZIP:
-                request.ContentType = ContentType.APPLICATION_ZIP_STRING;
+                request.ContentType = ContentType.APPLICATION_ZIP_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_X_TAR:
-                request.ContentType = ContentType.APPLICATION_X_TAR_STRING;
+                request.ContentType = ContentType.APPLICATION_X_TAR_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_X_RAR_COMPRESSED:
-                request.ContentType = ContentType.APPLICATION_X_RAR_COMPRESSED_STRING;
+                request.ContentType = ContentType.APPLICATION_X_RAR_COMPRESSED_STRING + ";charset=utf-8";
                 break;
             case ContentType.APPLICATION_X_7Z_COMPRESSED:
-                request.ContentType = ContentType.APPLICATION_X_7Z_COMPRESSED_STRING;
+                request.ContentType = ContentType.APPLICATION_X_7Z_COMPRESSED_STRING + ";charset=utf-8";
                 break;
             case ContentType.IMAGE_SVG_XML:
-                request.ContentType = ContentType.IMAGE_SVG_XML_STRING;
+                request.ContentType = ContentType.IMAGE_SVG_XML_STRING + ";charset=utf-8";
                 break;
             }
         }
@@ -290,10 +291,10 @@ namespace WindowsFormsRESTClient
         {
             using ( HttpWebResponse response = (HttpWebResponse) request.GetResponse() ) {
                 using ( var reader = new StreamReader( response.GetResponseStream() ) ) {
-                    var result = reader.ReadToEnd();
+                    string result = reader.ReadToEnd();
                     string responseCodeInfo = (int) response.StatusCode + " " + response.StatusCode.ToString();
                     UpdateTextBoxAndRefresh( tbResponseCodeOutput, responseCodeInfo );
-                    UpdateTextBoxAndRefresh( tbReceivedMessage, Convert.ToString( result ) );
+                    UpdateTextBoxAndRefresh( tbMessage, result );
                     UpdateTextBoxAndRefresh( tbHeaders, response.Headers.ToString() );
                 }
             }

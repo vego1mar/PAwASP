@@ -35,10 +35,10 @@
             this.btnPerform = new System.Windows.Forms.Button();
             this.tbResponseCode = new System.Windows.Forms.TextBox();
             this.tbResponseCodeOutput = new System.Windows.Forms.TextBox();
-            this.tbReceivedMessage = new System.Windows.Forms.TextBox();
+            this.tbMessage = new System.Windows.Forms.TextBox();
+            this.tbHeaders = new System.Windows.Forms.TextBox();
             this.tctrlMainWindow = new System.Windows.Forms.TabControl();
             this.tpgClient = new System.Windows.Forms.TabPage();
-            this.tbHeaders = new System.Windows.Forms.TextBox();
             this.tlpMainWindow.SuspendLayout();
             this.tctrlMainWindow.SuspendLayout();
             this.tpgClient.SuspendLayout();
@@ -58,7 +58,7 @@
             this.tlpMainWindow.Controls.Add(this.btnPerform, 3, 0);
             this.tlpMainWindow.Controls.Add(this.tbResponseCode, 0, 1);
             this.tlpMainWindow.Controls.Add(this.tbResponseCodeOutput, 1, 1);
-            this.tlpMainWindow.Controls.Add(this.tbReceivedMessage, 0, 2);
+            this.tlpMainWindow.Controls.Add(this.tbMessage, 0, 2);
             this.tlpMainWindow.Controls.Add(this.tbHeaders, 0, 3);
             this.tlpMainWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMainWindow.Location = new System.Drawing.Point(3, 3);
@@ -134,17 +134,29 @@
             this.tbResponseCodeOutput.Size = new System.Drawing.Size(934, 20);
             this.tbResponseCodeOutput.TabIndex = 5;
             // 
-            // tbReceivedMessage
+            // tbMessage
             // 
-            this.tlpMainWindow.SetColumnSpan(this.tbReceivedMessage, 4);
-            this.tbReceivedMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbReceivedMessage.Location = new System.Drawing.Point(3, 76);
-            this.tbReceivedMessage.Multiline = true;
-            this.tbReceivedMessage.Name = "tbReceivedMessage";
-            this.tbReceivedMessage.ReadOnly = true;
-            this.tbReceivedMessage.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbReceivedMessage.Size = new System.Drawing.Size(1038, 205);
-            this.tbReceivedMessage.TabIndex = 6;
+            this.tlpMainWindow.SetColumnSpan(this.tbMessage, 4);
+            this.tbMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMessage.Location = new System.Drawing.Point(3, 76);
+            this.tbMessage.Multiline = true;
+            this.tbMessage.Name = "tbMessage";
+            this.tbMessage.ReadOnly = true;
+            this.tbMessage.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbMessage.Size = new System.Drawing.Size(1038, 205);
+            this.tbMessage.TabIndex = 6;
+            // 
+            // tbHeaders
+            // 
+            this.tlpMainWindow.SetColumnSpan(this.tbHeaders, 4);
+            this.tbHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbHeaders.Location = new System.Drawing.Point(3, 287);
+            this.tbHeaders.Multiline = true;
+            this.tbHeaders.Name = "tbHeaders";
+            this.tbHeaders.ReadOnly = true;
+            this.tbHeaders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbHeaders.Size = new System.Drawing.Size(1038, 203);
+            this.tbHeaders.TabIndex = 7;
             // 
             // tctrlMainWindow
             // 
@@ -166,18 +178,6 @@
             this.tpgClient.TabIndex = 0;
             this.tpgClient.Text = "Client";
             this.tpgClient.UseVisualStyleBackColor = true;
-            // 
-            // tbHeaders
-            // 
-            this.tlpMainWindow.SetColumnSpan(this.tbHeaders, 4);
-            this.tbHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbHeaders.Location = new System.Drawing.Point(3, 287);
-            this.tbHeaders.Multiline = true;
-            this.tbHeaders.Name = "tbHeaders";
-            this.tbHeaders.ReadOnly = true;
-            this.tbHeaders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbHeaders.Size = new System.Drawing.Size(1038, 203);
-            this.tbHeaders.TabIndex = 7;
             // 
             // RestClient
             // 
@@ -210,7 +210,7 @@
         private System.Windows.Forms.Button btnPerform;
         private System.Windows.Forms.TextBox tbResponseCode;
         private System.Windows.Forms.TextBox tbResponseCodeOutput;
-        private System.Windows.Forms.TextBox tbReceivedMessage;
+        private System.Windows.Forms.TextBox tbMessage;
         private System.Windows.Forms.TextBox tbHeaders;
     }
 }
