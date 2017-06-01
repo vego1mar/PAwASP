@@ -66,8 +66,8 @@
             this.tlpMainWindow.RowCount = 4;
             this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43F));
-            this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42F));
+            this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tlpMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tlpMainWindow.Size = new System.Drawing.Size(1044, 493);
             this.tlpMainWindow.TabIndex = 0;
             // 
@@ -143,19 +143,19 @@
             this.tbMessage.Name = "tbMessage";
             this.tbMessage.ReadOnly = true;
             this.tbMessage.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbMessage.Size = new System.Drawing.Size(1038, 205);
+            this.tbMessage.Size = new System.Drawing.Size(1038, 265);
             this.tbMessage.TabIndex = 6;
             // 
             // tbHeaders
             // 
             this.tlpMainWindow.SetColumnSpan(this.tbHeaders, 4);
             this.tbHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbHeaders.Location = new System.Drawing.Point(3, 287);
+            this.tbHeaders.Location = new System.Drawing.Point(3, 347);
             this.tbHeaders.Multiline = true;
             this.tbHeaders.Name = "tbHeaders";
             this.tbHeaders.ReadOnly = true;
             this.tbHeaders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbHeaders.Size = new System.Drawing.Size(1038, 203);
+            this.tbHeaders.Size = new System.Drawing.Size(1038, 143);
             this.tbHeaders.TabIndex = 7;
             // 
             // tctrlMainWindow

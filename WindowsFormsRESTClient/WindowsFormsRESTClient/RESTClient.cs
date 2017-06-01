@@ -9,6 +9,8 @@ namespace WindowsFormsRESTClient
     public partial class RestClient : Form
     {
 
+        private readonly RestHttpHelper restHelper = new RestHttpHelper();
+
         public RestClient()
         {
             InitializeComponent();
@@ -171,213 +173,143 @@ namespace WindowsFormsRESTClient
 
         private void SendHttpGet( TextBox url )
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
-            GetHttpResponseAndUpdateUI( request );
+            HttpResponseMessage response = restHelper.HttpGet( url.Text );
+            UpdateUIToDisplayResponse( response );
         }
 
         private void SendHttpDelete( TextBox url )
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
-            request.Method = "DELETE";
-            GetHttpResponseAndUpdateUI( request );
+            HttpResponseMessage response = restHelper.HttpDelete( url.Text );
+            UpdateUIToDisplayResponse( response );
         }
 
         private void SendHttpPost( TextBox url, TextBox message )
         {
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create( url.Text );
-            SetSelectedContentType( request );
-            request.ContentLength = message.Text.Length;
-            request.Method = "POST";
-            SetAcceptHeaderAsSelectedContentType( request );
-            SendHttpRequest( request, message );
-            GetHttpResponseAndUpdateUI( request );
+            HttpResponseMessage response = restHelper.HttpPost( url.Text, message.Text, GetSelectedContentType(), GetAcceptHeaderAsSelectedContentType() );
+            UpdateUIToDisplayResponse( response );
         }
 
         private void SendHttpPut( TextBox url, TextBox message )
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
-            SetSelectedContentType( request );
-            request.ContentLength = message.Text.Length;
-            request.Method = "PUT";
-            SetAcceptHeaderAsSelectedContentType( request );
-            SendHttpRequest( request, message );
-            GetHttpResponseAndUpdateUI( request );
+            HttpResponseMessage response = restHelper.HttpPut( url.Text, message.Text, GetSelectedContentType(), GetAcceptHeaderAsSelectedContentType() );
+            UpdateUIToDisplayResponse( response );
         }
 
         private void SendHttpPatch( TextBox url, TextBox message )
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create( url.Text );
-            SetSelectedContentType( request );
-            request.ContentLength = message.Text.Length;
-            request.Method = "PATCH";
-            SetAcceptHeaderAsSelectedContentType( request );
-            SendHttpRequest( request, message );
-            GetHttpResponseAndUpdateUI( request );
+            HttpResponseMessage response = restHelper.HttpPatch( url.Text, message.Text, GetSelectedContentType(), GetAcceptHeaderAsSelectedContentType() );
+            UpdateUIToDisplayResponse( response );
         }
 
-        private void SetSelectedContentType( WebRequest request )
+        private string GetSelectedContentType()
         {
             switch ( cbContentType.SelectedIndex ) {
             case ContentType.APPLICATION_JSON:
-                request.ContentType = ContentType.APPLICATION_JSON_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_JSON_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_XML:
-                request.ContentType = ContentType.APPLICATION_XML_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_XML_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_OCTET_STREAM:
-                request.ContentType = ContentType.APPLICATION_OCTET_STREAM_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_OCTET_STREAM_STRING + ";charset=utf-8";
             case ContentType.TEXT_CSS:
-                request.ContentType = ContentType.TEXT_CSS_STRING + ";charset=utf-8";
-                break;
+                return ContentType.TEXT_CSS_STRING + ";charset=utf-8";
             case ContentType.TEXT_CSV:
-                request.ContentType = ContentType.TEXT_CSV_STRING + ";charset=utf-8";
-                break;
+                return ContentType.TEXT_CSV_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_MS_WORD:
-                request.ContentType = ContentType.APPLICATION_MS_WORD_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_MS_WORD_STRING + ";charset=utf-8";
             case ContentType.TEXT_HTML:
-                request.ContentType = ContentType.TEXT_HTML_STRING + ";charset=utf-8";
-                break;
+                return ContentType.TEXT_HTML_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_XHTML_XML:
-                request.ContentType = ContentType.APPLICATION_XHTML_XML_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_XHTML_XML_STRING + ";charset=utf-8";
             case ContentType.IMAGE_X_ICON:
-                request.ContentType = ContentType.IMAGE_X_ICON_STRING + ";charset=utf-8";
-                break;
+                return ContentType.IMAGE_X_ICON_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_JAVA_ARCHIVE:
-                request.ContentType = ContentType.APPLICATION_JAVA_ARCHIVE_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_JAVA_ARCHIVE_STRING + ";charset=utf-8";
             case ContentType.IMAGE_JPEG:
-                request.ContentType = ContentType.IMAGE_JPEG_STRING + ";charset=utf-8";
-                break;
+                return ContentType.IMAGE_JPEG_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_JAVA_SCRIPT:
-                request.ContentType = ContentType.APPLICATION_JAVA_SCRIPT_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_JAVA_SCRIPT_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_PDF:
-                request.ContentType = ContentType.APPLICATION_PDF_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_PDF_STRING + ";charset=utf-8";
             case ContentType.FONT_TTF:
-                request.ContentType = ContentType.FONT_TTF_STRING + ";charset=utf-8";
-                break;
+                return ContentType.FONT_TTF_STRING + ";charset=utf-8";
             case ContentType.VIDEO_WEBM:
-                request.ContentType = ContentType.VIDEO_WEBM_STRING + ";charset=utf-8";
-                break;
+                return ContentType.VIDEO_WEBM_STRING + ";charset=utf-8";
             case ContentType.AUDIO_WEBM:
-                request.ContentType = ContentType.AUDIO_WEBM_STRING + ";charset=utf-8";
-                break;
+                return ContentType.AUDIO_WEBM_STRING + ";charset=utf-8";
             case ContentType.IMAGE_WEBP:
-                request.ContentType = ContentType.IMAGE_WEBP_STRING + ";charset=utf-8";
-                break;
+                return ContentType.IMAGE_WEBP_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_ZIP:
-                request.ContentType = ContentType.APPLICATION_ZIP_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_ZIP_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_X_TAR:
-                request.ContentType = ContentType.APPLICATION_X_TAR_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_X_TAR_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_X_RAR_COMPRESSED:
-                request.ContentType = ContentType.APPLICATION_X_RAR_COMPRESSED_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_X_RAR_COMPRESSED_STRING + ";charset=utf-8";
             case ContentType.APPLICATION_X_7Z_COMPRESSED:
-                request.ContentType = ContentType.APPLICATION_X_7Z_COMPRESSED_STRING + ";charset=utf-8";
-                break;
+                return ContentType.APPLICATION_X_7Z_COMPRESSED_STRING + ";charset=utf-8";
             case ContentType.IMAGE_SVG_XML:
-                request.ContentType = ContentType.IMAGE_SVG_XML_STRING + ";charset=utf-8";
-                break;
+                return ContentType.IMAGE_SVG_XML_STRING + ";charset=utf-8";
             }
+
+            return null;
         }
 
-        private void GetHttpResponseAndUpdateUI( WebRequest request )
+        private void UpdateUIToDisplayResponse( HttpResponseMessage response )
         {
-            using ( HttpWebResponse response = (HttpWebResponse) request.GetResponse() ) {
-                using ( var reader = new StreamReader( response.GetResponseStream() ) ) {
-                    string result = reader.ReadToEnd();
-                    string responseCodeInfo = (int) response.StatusCode + " " + response.StatusCode.ToString();
-                    UpdateTextBoxAndRefresh( tbResponseCodeOutput, responseCodeInfo );
-                    UpdateTextBoxAndRefresh( tbMessage, result );
-                    UpdateTextBoxAndRefresh( tbHeaders, response.Headers.ToString() );
-                }
-            }
+            UpdateTextBoxAndRefresh( tbResponseCodeOutput, response.StatusCode + " " + response.StatusMessage );
+            UpdateTextBoxAndRefresh( tbMessage, response.ResultMessage );
+            UpdateTextBoxAndRefresh( tbHeaders, response.HeadersMessage );
         }
 
-        private void SendHttpRequest( WebRequest request, TextBox textToSend )
-        {
-            using ( var requestStream = request.GetRequestStream() ) {
-                var dataToSend = Encoding.UTF8.GetBytes( textToSend.Text );
-                request.GetRequestStream().Write( dataToSend, 0, dataToSend.Length );
-            }
-        }
-
-        private void SetAcceptHeaderAsSelectedContentType( HttpWebRequest httpRequest )
+        private string GetAcceptHeaderAsSelectedContentType()
         {
             switch ( cbContentType.SelectedIndex ) {
             case ContentType.APPLICATION_JSON:
-                httpRequest.Accept = ContentType.APPLICATION_JSON_STRING;
-                break;
+                return ContentType.APPLICATION_JSON_STRING;
             case ContentType.APPLICATION_XML:
-                httpRequest.Accept = ContentType.APPLICATION_XML_STRING;
-                break;
+                return ContentType.APPLICATION_XML_STRING;
             case ContentType.APPLICATION_OCTET_STREAM:
-                httpRequest.Accept = ContentType.APPLICATION_OCTET_STREAM_STRING;
-                break;
+                return ContentType.APPLICATION_OCTET_STREAM_STRING;
             case ContentType.TEXT_CSS:
-                httpRequest.Accept = ContentType.TEXT_CSS_STRING;
-                break;
+                return ContentType.TEXT_CSS_STRING;
             case ContentType.TEXT_CSV:
-                httpRequest.Accept = ContentType.TEXT_CSV_STRING;
-                break;
+                return ContentType.TEXT_CSV_STRING;
             case ContentType.APPLICATION_MS_WORD:
-                httpRequest.Accept = ContentType.APPLICATION_MS_WORD_STRING;
-                break;
+                return ContentType.APPLICATION_MS_WORD_STRING;
             case ContentType.TEXT_HTML:
-                httpRequest.Accept = ContentType.TEXT_HTML_STRING;
-                break;
+                return ContentType.TEXT_HTML_STRING;
             case ContentType.APPLICATION_XHTML_XML:
-                httpRequest.Accept = ContentType.APPLICATION_XHTML_XML_STRING;
-                break;
+                return ContentType.APPLICATION_XHTML_XML_STRING;
             case ContentType.IMAGE_X_ICON:
-                httpRequest.Accept = ContentType.IMAGE_X_ICON_STRING;
-                break;
+                return ContentType.IMAGE_X_ICON_STRING;
             case ContentType.APPLICATION_JAVA_ARCHIVE:
-                httpRequest.Accept = ContentType.APPLICATION_JAVA_ARCHIVE_STRING;
-                break;
+                return ContentType.APPLICATION_JAVA_ARCHIVE_STRING;
             case ContentType.IMAGE_JPEG:
-                httpRequest.Accept = ContentType.IMAGE_JPEG_STRING;
-                break;
+                return ContentType.IMAGE_JPEG_STRING;
             case ContentType.APPLICATION_JAVA_SCRIPT:
-                httpRequest.Accept = ContentType.APPLICATION_JAVA_SCRIPT_STRING;
-                break;
+                return ContentType.APPLICATION_JAVA_SCRIPT_STRING;
             case ContentType.APPLICATION_PDF:
-                httpRequest.Accept = ContentType.APPLICATION_PDF_STRING;
-                break;
+                return ContentType.APPLICATION_PDF_STRING;
             case ContentType.FONT_TTF:
-                httpRequest.Accept = ContentType.FONT_TTF_STRING;
-                break;
+                return ContentType.FONT_TTF_STRING;
             case ContentType.VIDEO_WEBM:
-                httpRequest.Accept = ContentType.VIDEO_WEBM_STRING;
-                break;
+                return ContentType.VIDEO_WEBM_STRING;
             case ContentType.AUDIO_WEBM:
-                httpRequest.Accept = ContentType.AUDIO_WEBM_STRING;
-                break;
+                return ContentType.AUDIO_WEBM_STRING;
             case ContentType.IMAGE_WEBP:
-                httpRequest.Accept = ContentType.IMAGE_WEBP_STRING;
-                break;
+                return ContentType.IMAGE_WEBP_STRING;
             case ContentType.APPLICATION_ZIP:
-                httpRequest.Accept = ContentType.APPLICATION_ZIP_STRING;
-                break;
+                return ContentType.APPLICATION_ZIP_STRING;
             case ContentType.APPLICATION_X_TAR:
-                httpRequest.Accept = ContentType.APPLICATION_X_TAR_STRING;
-                break;
+                return ContentType.APPLICATION_X_TAR_STRING;
             case ContentType.APPLICATION_X_RAR_COMPRESSED:
-                httpRequest.Accept = ContentType.APPLICATION_X_RAR_COMPRESSED_STRING;
-                break;
+                return ContentType.APPLICATION_X_RAR_COMPRESSED_STRING;
             case ContentType.APPLICATION_X_7Z_COMPRESSED:
-                httpRequest.Accept = ContentType.APPLICATION_X_7Z_COMPRESSED_STRING;
-                break;
+                return ContentType.APPLICATION_X_7Z_COMPRESSED_STRING;
             case ContentType.IMAGE_SVG_XML:
-                httpRequest.Accept = ContentType.IMAGE_SVG_XML_STRING;
-                break;
+                return ContentType.IMAGE_SVG_XML_STRING;
             }
+
+            return null;
         }
 
     }
